@@ -1,26 +1,249 @@
+/* new preflight import replaces @tailwind base */
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Theme colors */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --neon-color: #065f46; /* Light mode */
+  }
+
+  .dark {
+    --neon-color: #39FFCA; /* Dark mode */
   }
 }
 
+/* Light mode default */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('/images/main-bg-light.webp');
+}
+
+/* Dark mode */
+.dark body {
+  background-image: url('/images/main-bg-dark.webp');
+}
+
+/* ============================
+   DEFAULT NEON PORTAL GLOW
+============================ */
+.neon-portal {
+  transition: transform 0.35s ease;
+}
+
+.neon-portal:hover {
+  transform: scale(1.06);
+}
+
+/* ============================
+   TEXT ALWAYS NEON GLOW
+============================ */
+.neon-text {
+  transition: text-shadow 0.25s ease;
+}
+
+/* Neon only in dark mode */
+.dark .neon-text {
+  text-shadow:
+    0 0 2px currentColor,
+    0 0 4px currentColor,
+    0 0 8px currentColor;
+}
+
+/* ============================
+   STATUS GLOW VARIANTS
+============================ */
+
+/* --- ALIVE (Green) --- */
+.neon-alive {
+  border-color: #4ade80;
+  box-shadow:
+    0 0 3px #4ade80,
+    0 0 6px #bbf7d0,
+    0 0 10px #166534;
+}
+
+.neon-alive:hover {
+  animation: neonAliveGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonAliveGlow {
+  0% {
+    box-shadow:
+      0 0 8px #4ade80,
+      0 0 16px #bbf7d0,
+      0 0 24px #166534;
+  }
+  100% {
+    box-shadow:
+      0 0 12px #86efac,
+      0 0 24px #4ade80,
+      0 0 34px #166534;
+  }
+}
+
+/* --- DEAD (Red) --- */
+.neon-dead {
+  border-color: #f87171;
+  box-shadow:
+    0 0 3px #f87171,
+    0 0 6px #fecaca,
+    0 0 10px #7f1d1d;
+}
+
+.neon-dead:hover {
+  animation: neonDeadGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonDeadGlow {
+  0% {
+    box-shadow:
+      0 0 8px #fca5a5,
+      0 0 18px #f87171,
+      0 0 26px #7f1d1d;
+  }
+  100% {
+    box-shadow:
+      0 0 12px #ef4444,
+      0 0 26px #b91c1c,
+      0 0 38px #7f1d1d;
+  }
+}
+
+/* --- UNKNOWN (Yellow) --- */
+.neon-unknown {
+  border-color: #facc15;
+  box-shadow:
+    0 0 3px #facc15,
+    0 0 6px #fef08a,
+    0 0 10px #854d0e;
+}
+
+.neon-unknown:hover {
+  animation: neonUnknownGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonUnknownGlow {
+  0% {
+    box-shadow:
+      0 0 8px #fde047,
+      0 0 18px #facc15,
+      0 0 26px #854d0e;
+  }
+  100% {
+    box-shadow:
+      0 0 12px #eab308,
+      0 0 26px #ca8a04,
+      0 0 38px #854d0e;
+  }
+}
+
+.dark .neon-input {
+  text-shadow:
+    0 0 1px var(--neon-color),
+    0 0 3px var(--neon-color);
+}
+.neon-input {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(1.25rem);
+  transition: all 0.25s ease;
+  color: var(--neon-color);
+  border: 2px solid var(--neon-color);
+  
+  box-shadow:
+    0 0 2px var(--neon-color),
+    0 0 4px var(--neon-color);
+}
+
+.neon-input:focus {
+  outline: none;
+  box-shadow:
+    0 0 4px var(--neon-color),
+    0 0 8px var(--neon-color);
+}
+
+/* Border-only utility */
+.border-neon {
+  border: 2px solid var(--neon-color);
+  box-shadow:
+    0 0 2px var(--neon-color),
+    0 0 4px var(--neon-color);
+}
+
+/* ============================
+   UNIVERSAL PORTAL NEON
+   Light = Purple | Dark = Blue
+============================ */
+
+/* Light mode (default) */
+.neon-card {
+  border-color: #a855f7;
+  box-shadow:
+    0 0 3px #a855f7,
+    0 0 6px #d8b4fe,
+    0 0 12px #581c87;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover (light) */
+.neon-card-hover:hover {
+  animation: neonPortalPurpleGlow 2s ease-in-out infinite alternate;
+}
+
+/* Purple glow animation */
+@keyframes neonPortalPurpleGlow {
+  0% {
+    box-shadow:
+      0 0 10px #c084fc,
+      0 0 20px #a855f7,
+      0 0 30px #581c87;
+  }
+  100% {
+    box-shadow:
+      0 0 14px #e9d5ff,
+      0 0 28px #a855f7,
+      0 0 42px #581c87;
+  }
+}
+
+/* Dark Mode overrides to BLUE */
+.dark .neon-card {
+  border-color: #00eaff;
+  box-shadow:
+    0 0 3px #00eaff,
+    0 0 6px #7df4ff,
+    0 0 12px #007f92;
+}
+
+/* Hover (dark) */
+.dark .neon-card-hover:hover {
+  animation: neonPortalBlueGlow 2s ease-in-out infinite alternate;
+}
+
+/* Blue glow animation */
+@keyframes neonPortalBlueGlow {
+  0% {
+    box-shadow:
+      0 0 10px #7df4ff,
+      0 0 20px #00eaff,
+      0 0 30px #007f92;
+  }
+  100% {
+    box-shadow:
+      0 0 14px #b3f9ff,
+      0 0 28px #00eaff,
+      0 0 40px #007f92;
+  }
+}
+
+.nav-link {
+  @apply transition font-medium hover:opacity-80;
+}
+
+.dark .nav-link {
+  @apply text-white drop-shadow-[0_0_4px_rgba(0,255,0,0.6)];
+}
+
+.light .nav-link {
+  @apply text-neutral-700;
 }
