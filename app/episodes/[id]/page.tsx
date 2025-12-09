@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { useParams } from "next/navigation";
 import { useEpisodeDetailStore } from "@/app/store/use-episode-detail-store";
 import { useEffect } from "react";
