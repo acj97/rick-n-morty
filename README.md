@@ -15,8 +15,8 @@ setup 5 min
 layouting/design 30 min
 API Integration 30 min
 UI 4 hour
-Deploy 30 min
+Deploy 60 min
 Testing 30 min
 
 
-total: 6 hours and 5 minutes
+total: 6 hours and 35 minutes
